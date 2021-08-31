@@ -44,8 +44,13 @@ include_directories( BEFORE SYSTEM
 )
 
 add_library( ssl ${LIBSRC} )
+add_library(OpenSSL::SSL ALIAS ssl)
 
-target_include_directories( ssl PUBLIC ${PROJECT_BINARY_DIR}/include )
+target_include_directories(ssl
+  PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
 
 target_link_libraries( ssl crypto )
 

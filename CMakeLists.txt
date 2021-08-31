@@ -177,6 +177,21 @@ configure_file( ${PROJECT_BINARY_DIR}/opensslconf.h.cmake
 add_subdirectory(crypto)
 add_subdirectory(ssl)
 
+install(TARGETS ssl crypto
+  EXPORT OpenSSLTargets
+)
+
+export(EXPORT OpenSSLTargets
+  FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/OpenSSLTargets.cmake"
+  NAMESPACE OpenSSL::
+)
+
+install(EXPORT OpenSSLTargets
+  FILE OpenSSLTargets.cmake
+  NAMESPACE OpenSSL::
+  DESTINATION lib/cmake/OpenSSL
+)
+
 if( WITH_APPS AND NOT ANDROID AND NOT IOS )
   add_subdirectory(apps)
 
